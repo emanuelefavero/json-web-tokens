@@ -1,0 +1,31 @@
+# authServer is on port 4000
+# post server is on port 3000
+
+### LOGIN as user John on authServer 4000
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+  "username": "John"
+}
+
+### LOGOUT (delete refreshToken)
+DELETE http://localhost:4000/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSIsImlhdCI6MTY1NzUyMjE4M30.juDbHMAoHphiM_lITtWO8QqUuthcPVHLt6SzCootEQo"
+}
+
+### POST REFRESH TOKEN PROVIDED AT LOGIN TO AUTH SERVER
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSIsImlhdCI6MTY1NzUyMjE5Nn0.3u_uHLwgdSi-Lciw7MwGnPvvw85FdRjqjmQeMP3Bw8o"
+}
+
+### POST ACCESS TOKEN PROVIDED AT /token TO GET USER POSTS
+# instead of needing to login each time, we just need to provide refresh token in /token POST request
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSIsImlhdCI6MTY1NzUyMjIyMCwiZXhwIjoxNjU3NTIyMjM1fQ.5PvbkYgSmW6bhzvVfapyhs9orlEgFuXIMuqImNJHQCM
